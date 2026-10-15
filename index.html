@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Secret Crush — แอบชอบเธออยู่นะ 💗</title>
+  <meta name="theme-color" content="#fff0f5">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  
+  <style>
+    :root {
+      --bg-gradient-1: #fff1f4;
+      --bg-gradient-2: #ffe4e9;
+      --bg-gradient-3: #ffd8e4;
+      --bg-gradient-4: #fff5f8;
+      --primary-pink: #ff6b95;
+      --deep-pink: #e04877;
+      --soft-rose: #ff8da9;
+      --warm-blush: #ffa7be;
+      --cream-light: #fffdf9;
+      --gold-sparkle: rgba(255, 223, 137, 0.85);
+      --card-shadow: 0 16px 36px rgba(224, 72, 119, 0.16);
+      --font-stack: 'Prompt', 'Mitr', 'Kanit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: var(--font-stack);
+      position: relative;
+      touch-action: manipulation;
+    }
+
+    body {
+      background: linear-gradient(135deg, #fff0f3, #ffe3ec, #ffd1dc, #ffebee);
+      background-size: 400% 400%;
+      animation: ambientGradient 18s ease infinite;
+      color: #5a3e47;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @keyframes ambientGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Dreamy bokeh lighting in background */
+    .bokeh-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(55px);
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.6;
+      animation: floatOrb 12s ease-in-out infinite alternate;
+    }
+
+    .bokeh-1 {
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(255,182,193,0.8), rgba(255,192,203,0));
+      top: -40px;
+      left: -40px;
+    }
+
+    .bokeh-2 {
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(255,218,185,0.7), rgba(255,182,193,0));
+      bottom: -60px;
+      right: -60px;
+      animation-delay: -5s;
+    }
+
+    .bokeh-3 {
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(255,200,220,0.65), rgba(255,255,255,0));
+      top: 40%;
+      left: 60%;
+      animation-delay: -2s;
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(25px, 35px) scale(1.12); }
+    }
+
+    #ambient-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Ambient floating hearts in deep background */
+    .bg-heart-container {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .bg-floating-heart {
+      position: absolute;
+      bottom: -40px;
+      color: rgba(255, 138, 172, 0.45);
+      font-size: 1.1rem;
+      pointer-events: none;
+      animation: driftUp linear infinite;
+    }
+
+    @keyframes driftUp {
+      0% {
+        transform: translateY(0) rotate(0deg) scale(0.8);
+        opacity: 0;
+      }
+      15% {
+        opacity: 0.7;
+      }
+      85% {
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateY(-110vh) rotate(360deg) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    #heart-stage {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      max-width: 100%;
+      max-height: 100%;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 5;
+    }
+
+    #heart-cluster {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /* Heartbeat animation applied once the full heart has formed */
+    .heart-beat-active {
+      animation: romanticBeat 2.4s ease-in-out infinite;
+    }
+
+    @keyframes romanticBeat {
+      0% {
+        transform: translate(-50%, -50%) scale(1);
+        filter: drop-shadow(0 0 10px rgba(255, 107, 149, 0.15));
+      }
+      12% {
+        transform: translate(-50%, -50%) scale(1.055);
+        filter: drop-shadow(0 0 25px rgba(255, 107, 149, 0.45));
+      }
+      22% {
+        transform: translate(-50%, -50%) scale(1.015);
+      }
+      34% {
+        transform: translate(-50%, -50%) scale(1.045);
+        filter: drop-shadow(0 0 20px rgba(255, 107, 149, 0.35));
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1);
+        filter: drop-shadow(0 0 10px rgba(255, 107, 149, 0.15));
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+        filter: drop-shadow(0 0 10px rgba(255, 107, 149, 0.15));
+      }
+    }
+
+    /* Individual text nodes that form the heart shape */
+    .heart-word {
+      position: absolute;
+      white-space: nowrap;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      line-height: 1;
+      padding: 2px 4px;
+      border-radius: 8px;
+      pointer-events: none;
+      transform: translate(-50%, -50%) scale(0.2);
+      opacity: 0;
+      will-change: transform, opacity;
+      transition: transform 0.9s cubic-bezier(0.25, 1, 0.5, 1),
+                  opacity 0.8s ease-out,
+                  filter 0.6s ease;
+      text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8),
+                   0 2px 8px rgba(255, 105, 180, 0.22);
+    }
+
+    .heart-word.visible {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .heart-word.dissolving {
+      opacity: 0 !important;
+      transform: translate(-50%, calc(-50% - 30px)) scale(0.3) rotate(8deg) !important;
+      filter: blur(6px) !important;
+      transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 1s ease-in,
+                  filter 1s ease-in !important;
+    }
+
+    #center-banner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.7);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 10;
+      transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    #center-banner.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+      pointer-events: auto; /* อนุญาตให้กดปุ่มได้เมื่อแสดงผล */
+    }
+
+    #center-banner.hide {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.85);
+      filter: blur(8px);
+      transition: all 0.9s ease-in-out;
+      pointer-events: none;
+    }
+
+    .center-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1.5px solid rgba(255, 182, 193, 0.85);
+      padding: 13px 26px;
+      border-radius: 9999px;
+      box-shadow: 0 12px 35px rgba(224, 72, 119, 0.25),
+                  0 0 22px rgba(255, 182, 193, 0.5);
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+      animation: centerGlowPulse 2.2s infinite ease-in-out;
+    }
+
+    .center-card:hover {
+      transform: scale(1.06);
+      box-shadow: 0 16px 40px rgba(224, 72, 119, 0.35), 0 0 28px rgba(255, 182, 193, 0.7);
+    }
+
+    .center-card:active {
+      transform: scale(0.95);
+    }
+
+    @keyframes centerGlowPulse {
+      0%, 100% {
+        box-shadow: 0 12px 35px rgba(224, 72, 119, 0.25), 0 0 18px rgba(255, 182, 193, 0.45);
+      }
+      50% {
+        box-shadow: 0 14px 42px rgba(224, 72, 119, 0.38), 0 0 30px rgba(255, 182, 193, 0.8);
+      }
+    }
+
+    .center-card::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 9999px;
+      background: linear-gradient(120deg, #ff9ebb, #ff5388, #ffd4a3, #ff8fa3);
+      z-index: -1;
+      opacity: 0.7;
+      filter: blur(4px);
+    }
+
+    .center-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #d82b68, #ff4d88, #e63964);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 10px rgba(255, 105, 180, 0.2);
+    }
+
+    .center-heart-icon {
+      font-size: 1.35rem;
+      display: inline-block;
+      animation: miniPulse 1.2s infinite ease-in-out;
+    }
+
+    @keyframes miniPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.28); }
+    }
+
+    /* Pop-up modal สำหรับข้อความอวยพรปีใหม่ */
+    .wish-modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(255, 230, 240, 0.55);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.45s ease;
+    }
+
+    .wish-modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .wish-card {
+      background: rgba(255, 255, 255, 0.98);
+      border-radius: 36px;
+      padding: 38px 30px;
+      max-width: 480px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 25px 60px rgba(224, 72, 119, 0.32),
+                  0 0 45px rgba(255, 182, 193, 0.6);
+      border: 2px solid rgba(255, 175, 195, 0.7);
+      transform: scale(0.6) translateY(20px);
+      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+    }
+
+    .wish-modal-overlay.active .wish-card {
+      transform: scale(1) translateY(0);
+    }
+
+    .wish-icon-crown {
+      font-size: 3rem;
+      margin-bottom: 12px;
+      display: inline-block;
+      animation: crownBounce 2.4s infinite ease-in-out;
+    }
+
+    @keyframes crownBounce {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(6deg) scale(1.08); }
+    }
+
+    .wish-message {
+      font-size: 1.85rem;
+      font-weight: 800;
+      line-height: 1.45;
+      background: linear-gradient(135deg, #d82b68, #ff3377, #f75c87);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 14px;
+      letter-spacing: 0.5px;
+    }
+
+    .wish-subtext {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #9c4562;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    /* ปุ่มหลงหนุ่มเชียงรายกดปุ่มนี้ */
+    .cr-love-btn {
+      background: linear-gradient(135deg, #ff4071, #ff6584, #ff2e63);
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 1.12rem;
+      font-weight: 700;
+      border: none;
+      padding: 13px 30px;
+      border-radius: 9999px;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(255, 46, 99, 0.4), 0 0 16px rgba(255, 182, 193, 0.6);
+      transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      animation: crPulse 2s infinite ease-in-out;
+    }
+
+    .cr-love-btn:hover {
+      transform: scale(1.06);
+      box-shadow: 0 14px 30px rgba(255, 46, 99, 0.5), 0 0 24px rgba(255, 182, 193, 0.8);
+    }
+
+    .cr-love-btn:active {
+      transform: scale(0.95);
+    }
+
+    @keyframes crPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.04); }
+    }
+
+    .cr-love-result {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #d82b68;
+      margin-bottom: 16px;
+      opacity: 0;
+      transform: translateY(10px) scale(0.9);
+      transition: all 0.4s ease;
+      display: none;
+    }
+
+    .cr-love-result.show {
+      display: block;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .wish-close-btn {
+      background: rgba(255, 235, 240, 0.9);
+      color: #c2185b;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: 1.5px solid rgba(255, 182, 193, 0.8);
+      padding: 9px 24px;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+      display: inline-block;
+    }
+
+    .wish-close-btn:hover {
+      transform: scale(1.05);
+      background: #ffe3ec;
+    }
+
+    .wish-close-btn:active {
+      transform: scale(0.96);
+    }
+
+    .touch-bubble {
+      position: fixed;
+      z-index: 100;
+      pointer-events: none;
+      transform: translate(-50%, -50%) scale(0.4);
+      opacity: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.99), rgba(255, 240, 245, 0.98));
+      border: 1.8px solid #ff7b9f;
+      border-radius: 9999px;
+      box-shadow: 0 12px 30px rgba(224, 72, 119, 0.3),
+                  0 0 20px rgba(255, 138, 172, 0.4);
+      color: #d12760;
+      font-weight: 700;
+      font-size: 1.15rem;
+      white-space: nowrap;
+      animation: popFloat 3.3s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+      will-change: transform, opacity;
+    }
+
+    /* อัปเดตแอนิเมชันให้อยู่ชัดนาน 3 วินาทีแล้วค่อย ๆ จางหาย */
+    @keyframes popFloat {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.35) rotate(-4deg);
+      }
+      8% {
+        opacity: 1;
+        transform: translate(-50%, -55px) scale(1.1) rotate(2deg);
+      }
+      15% {
+        opacity: 1;
+        transform: translate(-50%, -60px) scale(1) rotate(0deg);
+      }
+      85% {
+        opacity: 1;
+        transform: translate(-50%, -75px) scale(1);
+        filter: blur(0px);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -105px) scale(0.85);
+        filter: blur(5px);
+      }
+    }
+
+    .touch-burst-heart {
+      position: fixed;
+      z-index: 99;
+      pointer-events: none;
+      font-size: 1.15rem;
+      transform: translate(-50%, -50%) scale(0.5);
+      opacity: 1;
+      animation: heartBurst 1.1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      will-change: transform, opacity;
+    }
+
+    @keyframes heartBurst {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0.4) rotate(0deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.25) rotate(var(--rot));
+      }
+    }
+
+    @media (max-width: 480px) {
+      .center-card {
+        padding: 10px 20px;
+      }
+      .center-title {
+        font-size: 1.15rem;
+      }
+      .cr-love-btn {
+        font-size: 1rem;
+        padding: 11px 22px;
+      }
+      .wish-message {
+        font-size: 1.5rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      body {
+        animation: none;
+      }
+      .bokeh-orb, .bg-floating-heart, .heart-beat-active {
+        animation: none;
+      }
+      .heart-word {
+        transition: opacity 0.5s linear;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Ambient background lighting effects -->
+  <div class="bokeh-orb bokeh-1"></div>
+  <div class="bokeh-orb bokeh-2"></div>
+  <div class="bokeh-orb bokeh-3"></div>
+
+  <!-- Particle sparkle canvas -->
+  <canvas id="ambient-canvas"></canvas>
+
+  <!-- Background floating hearts container -->
+  <div class="bg-heart-container" id="bg-hearts"></div>
+
+  <!-- Interactive main stage -->
+  <main id="heart-stage" aria-label="สนามแห่งความรัก">
+    <!-- Center heart cluster holding all text words -->
+    <div id="heart-cluster"></div>
+
+    <!-- Center Special Interactive Button -->
+    <div id="center-banner" aria-live="polite">
+      <div class="center-card" id="btn-newyear" role="button" aria-label="ลองกดดูสิปีใหม่">
+        <span class="center-title">ลองกดดูสิปีใหม่</span>
+        <span class="center-heart-icon">✨</span>
+      </div>
+    </div>
+  </main>
+
+  <!-- Big Pop-up Modal อวยพรปีใหม่ -->
+  <div class="wish-modal-overlay" id="wish-modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="wish-card">
+      <div class="wish-icon-crown">🌸💌✨</div>
+      <h2 class="wish-message">ขอให้วันนี้เป็นวันที่ดีของปีใหม่นะ</h2>
+      <p class="wish-subtext">รอยยิ้มของเธอคือสิ่งที่ดีที่สุดเสมอเลยนะ 💖</p>
+      
+      <!-- ปุ่มที่มีชื่อว่า หลงหนุ่มเชียงรายกดปุ่มนี้ -->
+      <div>
+        <button class="cr-love-btn" id="btn-cr-love">
+          <span>หลงหนุ่มเชียงรายกดปุ่มนี้</span>
+          <span style="font-size: 1.25rem;">🏔️❤️</span>
+        </button>
+      </div>
+
+      <div class="cr-love-result" id="cr-love-result">
+        หนุ่มเชียงรายก็หลงเธอเหมือนกันนะรู้ยัง! 🙈💖
+      </div>
+
+      <div>
+        <button class="wish-close-btn" id="btn-close-wish">ปิดหน้านี้ (ยิ้มแล้ว ☺️)</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /**
+     * CONFIGURATION OBJECT
+     * แก้ไขข้อความ ระยะเวลา และจำนวนอนุภาคได้ง่ายดายจากส่วนนี้
+     */
+    const CONFIG = {
+      // รายการข้อความน่ารักแนวจีบ/หยอด
+      sweetPhrases: [
+        "เธอน่ารักจัง", "ยิ้มหน่อยสิ", "แอบคิดถึงนะ", "วันนี้ยิ้มยัง",
+        "ขอจีบได้มั้ย", "ชอบเวลาเธอยิ้ม", "คนอะไรน่ารักจัง", "ใจเต้นอีกแล้ว",
+        "แอบมองอยู่นะ", "อยากคุยด้วยทุกวัน", "เธอพิเศษนะ", "คิดถึงได้ปะ",
+        "เขินแล้วนะ", "ทำไมน่ารักขนาดนี้", "ขอเป็นคนโปรดได้ไหม", "วันนี้ก็ชอบเธอ",
+        "ตกหลุมรักรอบที่ล้าน", "มองกี่ทีก็น่ารัก", "น่ารักเกินปุยมุ้ย", "แพ้รอยยิ้มเธอ",
+        "สเปกเราก็คือเธอ", "อยู่ใกล้แล้วใจสั่น", "อยากให้รู้ว่าชอบ", "คิดถึงแกจัง",
+        "รอยยิ้มพิมพ์ใจ", "น่ารักจังวะ", "อยากดูแลนะ", "ชอบเธอที่สุดเลย",
+        "มองตาแล้วเขิน", "มีใจก็บอกนะ", "ยอมแพ้ความน่ารัก", "หวานใจใครเนี่ย",
+        "ชอบแกจริง ๆ นะ", "น่ารักแบบตะโกน", "วันนี้น่ารักอีกแล้ว", "น่ารักเต็มสิบ",
+        "ให้ใจไปหมดแล้ว", "คนดีของใจ", "อย่าทำให้หวั่นไหวสิ", "ต้าวความสดใส",
+        "ยิ้มของเธอคือความสุข", "ชอบเธอนะรู้ยัง", "มีใจให้กันบ้างปะ", "แอบส่งยิ้มให้",
+        "อยู่เป็นความสุขนะ", "คิดถึงทุกลมหายใจ", "ใจฟูเวลาเจอเธอ", "ไม่อยากให้หายไปไหน",
+        "ชอบแกคนเดียวเลย", "รักเธอนะต้าวบ้า", "คนโปรดของเรา", "เธอคือของขวัญ",
+        "ใจละลายหมดแล้ว", "คนน่ารัก2026", "อยากกอดสักที", "น่ารักแบบไม่มีพัก"
+      ],
+
+      // สีข้อความในรูปหัวใจ (พาเลทโทนชมพูหวาน-กุหลาบ-แดงราสเบอร์รี)
+      textColors: [
+        "#ff4d79", "#ff6b95", "#e63964", "#d12760", 
+        "#ff7597", "#f04374", "#e84393", "#fd79a8",
+        "#ff5252", "#d63031", "#c2185b", "#ff4081"
+      ],
+
+      // Click / Touch Toggle Phrases
+      tapTogglePhrases: [
+        "ยัยบ๋อง 💗",
+        "อย่าซน 🤭"
+      ],
+
+      // พารามิเตอร์ของหัวใจและการวนลูป
+      heartTotalPoints: 92,     // จำนวนจุดข้อความรอบหัวใจและด้านใน
+      staggerDelay: 42,         // ความเร็วการทยอยโผล่ของข้อความ (ms ต่อข้อความ)
+      holdDuration: 5000,       // ระยะเวลาค้างไว้หลังจากหัวใจสร้างเสร็จ (5 วินาที)
+      dissolveInterval: 14      // ความเร็วการสลายตัวของข้อความ (ms ต่อข้อความ)
+    };
+
+    // DOM Elements
+    const heartCluster = document.getElementById('heart-cluster');
+    const centerBanner = document.getElementById('center-banner');
+    const bgHeartsContainer = document.getElementById('bg-hearts');
+    const btnNewYear = document.getElementById('btn-newyear');
+    const wishModal = document.getElementById('wish-modal');
+    const btnCloseWish = document.getElementById('btn-close-wish');
+    const btnCrLove = document.getElementById('btn-cr-love');
+    const crLoveResult = document.getElementById('cr-love-result');
+    const canvas = document.getElementById('ambient-canvas');
+    const ctx = canvas.getContext('2d');
+
+    // Runtime State
+    let animationLoopTimer = null;
+    let wordElements = [];
+    let isLoopRunning = false;
+    let clickCounter = 0;
+    let lastTapTime = 0;
+    let isModalOpen = false;
+
+    /**
+     * ระบบเปิด-ปิด Modal คำอวยพร "ขอให้วันนี้เป็นวันที่ดีของปีใหม่นะ"
+     */
+    function openWishModal() {
+      isModalOpen = true;
+      wishModal.classList.add('active');
+      wishModal.setAttribute('aria-hidden', 'false');
+      crLoveResult.classList.remove('show');
+
+      // ยิงเอฟเฟกต์พลุหัวใจรอบหน้าจอ
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+      for (let i = 0; i < 16; i++) {
+        setTimeout(() => {
+          const offsetX = (Math.random() - 0.5) * 220;
+          const offsetY = (Math.random() - 0.5) * 160;
+          spawnBurstHearts(centerX + offsetX, centerY + offsetY, 5);
+        }, i * 60);
+      }
+    }
+
+    function closeWishModal() {
+      isModalOpen = false;
+      wishModal.classList.remove('active');
+      wishModal.setAttribute('aria-hidden', 'true');
+
+      // หลังจากปิด ให้รอ 2 วินาทีแล้วเริ่มสลายเพื่อวนลูปต่อไปตามปกติ
+      setTimeout(() => {
+        if (isLoopRunning) {
+          startDissolveTransition();
+        }
+      }, 2000);
+    }
+
+    btnNewYear.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openWishModal();
+    });
+
+    btnCrLove.addEventListener('click', (e) => {
+      e.stopPropagation();
+      crLoveResult.classList.add('show');
+      
+      // ปล่อยฝนหัวใจและประกายวิ้งค์รัว ๆ
+      const rect = btnCrLove.getBoundingClientRect();
+      const clickX = rect.left + rect.width / 2;
+      const clickY = rect.top + rect.height / 2;
+      for (let i = 0; i < 12; i++) {
+        setTimeout(() => {
+          spawnBurstHearts(clickX + (Math.random() - 0.5) * 80, clickY + (Math.random() - 0.5) * 30, 6);
+        }, i * 70);
+      }
+    });
+
+    btnCloseWish.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeWishModal();
+    });
+
+    wishModal.addEventListener('click', (e) => {
+      if (e.target === wishModal) {
+        closeWishModal();
+      }
+    });
+
+    /**
+     * ล้าง Elements ออกจาก DOM เพื่อป้องกัน Memory Leak
+     */
+    function cleanupHeartWords() {
+      while (heartCluster.firstChild) {
+        heartCluster.removeChild(heartCluster.firstChild);
+      }
+      wordElements = [];
+    }
+
+    /**
+     * ตอบสนองการคลิกหรือสัมผัสหน้าจอ: สลับข้อความ "ยัยบ๋อง 💗" <-> "อย่าซน 🤭"
+     * แสดงชัดเจนค้างไว้ 3 วินาทีเต็ม แล้วค่อยจางหายไป
+     */
+    function triggerTouchInteraction(x, y) {
+      if (isModalOpen) return; // ไม่ยิงข้อความลอยหากกำลังอ่านข้อความตัวใหญ่
+
+      clickCounter++;
+      const phraseIndex = (clickCounter - 1) % CONFIG.tapTogglePhrases.length;
+      const phraseText = CONFIG.tapTogglePhrases[phraseIndex];
+
+      // 1. สร้าง Bubble ข้อความ
+      const bubble = document.createElement('div');
+      bubble.className = 'touch-bubble';
+      bubble.innerHTML = `${phraseText}`;
+
+      // คำนวณขอบเขตหน้าจอ ไม่ให้หลุดเฟรม
+      const clampedX = Math.max(85, Math.min(window.innerWidth - 85, x));
+      const clampedY = Math.max(90, Math.min(window.innerHeight - 60, y));
+
+      bubble.style.left = `${clampedX}px`;
+      bubble.style.top = `${clampedY}px`;
+      document.body.appendChild(bubble);
+
+      // ล้าง Element หลังเล่นอนิเมชันครบ 3.3 วินาที (อยู่นิ่ง 3 วินาที + เฟดออก)
+      setTimeout(() => {
+        if (bubble.parentNode) {
+          bubble.parentNode.removeChild(bubble);
+        }
+      }, 3400);
+
+      // 2. เสริมเอฟเฟกต์ประกายหัวใจจิ๋วแตกกระจายรอบจุดที่แตะ
+      spawnBurstHearts(x, y, 4 + Math.floor(Math.random() * 2));
+    }
+
+    function spawnBurstHearts(x, y, count) {
+      const miniIcons = ['💖', '💕', '✨', '🌸', '💗', '⭐'];
+
+      for (let i = 0; i < count; i++) {
+        const mini = document.createElement('span');
+        mini.className = 'touch-burst-heart';
+        mini.textContent = miniIcons[Math.floor(Math.random() * miniIcons.length)];
+
+        // สุ่มทิศทางมุมและระยะกระเด็น
+        const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.5;
+        const dist = 50 + Math.random() * 55;
+        const dx = Math.cos(angle) * dist;
+        const dy = Math.sin(angle) * dist;
+        const rot = (Math.random() - 0.5) * 70;
+
+        mini.style.setProperty('--dx', `${dx}px`);
+        mini.style.setProperty('--dy', `${dy}px`);
+        mini.style.setProperty('--rot', `${rot}deg`);
+        mini.style.left = `${x}px`;
+        mini.style.top = `${y}px`;
+
+        document.body.appendChild(mini);
+
+        setTimeout(() => {
+          if (mini.parentNode) {
+            mini.parentNode.removeChild(mini);
+          }
+        }, 1300);
+      }
+    }
+
+    // จัดการ Event ป้องกัน Ghost Click จากการแตะบน Mobile
+    function handlePointerEvent(e) {
+      const now = Date.now();
+      if (now - lastTapTime < 60) return; // Debounce ป้องกันดับเบิลคลิกซ้อน
+      lastTapTime = now;
+
+      let posX = e.clientX;
+      let posY = e.clientY;
+
+      if (e.touches && e.touches.length > 0) {
+        posX = e.touches[0].clientX;
+        posY = e.touches[0].clientY;
+      }
+
+      if (typeof posX === 'number' && typeof posY === 'number') {
+        triggerTouchInteraction(posX, posY);
+      }
+    }
+
+    // ผูก Event ให้รองรับทั้ง Click, Touch และ Pointer
+    window.addEventListener('pointerdown', (e) => {
+      // ไม่ยิงเอฟเฟกต์หากกดโดนปุ่มกดกลางจอ หรือกล่องข้อความโมดอล
+      if (e.target && (e.target.closest('#btn-newyear') || e.target.closest('.wish-card'))) return;
+      handlePointerEvent(e);
+    });
+
+    // ประกายแสงระยิบระยับแบบ Particle บน HTML5 Canvas
+    const sparkles = [];
+    const MAX_SPARKLES = 38;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Sparkle {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = 1.2 + Math.random() * 2.8;
+        this.maxAlpha = 0.4 + Math.random() * 0.55;
+        this.alpha = 0;
+        this.speedAlpha = 0.008 + Math.random() * 0.015;
+        this.growing = true;
+        this.color = Math.random() > 0.4 ? '255, 223, 150' : '255, 180, 205';
+      }
+
+      update() {
+        if (this.growing) {
+          this.alpha += this.speedAlpha;
+          if (this.alpha >= this.maxAlpha) {
+            this.growing = false;
+          }
+        } else {
+          this.alpha -= this.speedAlpha;
+          if (this.alpha <= 0) {
+            this.reset();
+          }
+        }
+      }
+
+      draw() {
+        ctx.save();
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(${this.color}, ${this.alpha})`;
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Cross star flare
+        if (this.size > 2.4 && this.alpha > 0.3) {
+          ctx.strokeStyle = `rgba(${this.color}, ${this.alpha * 0.6})`;
+          ctx.lineWidth = 0.6;
+          ctx.beginPath();
+          ctx.moveTo(this.x - this.size * 2, this.y);
+          ctx.lineTo(this.x + this.size * 2, this.y);
+          ctx.moveTo(this.x, this.y - this.size * 2);
+          ctx.lineTo(this.x, this.y + this.size * 2);
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+    }
+
+    for (let i = 0; i < MAX_SPARKLES; i++) {
+      sparkles.push(new Sparkle());
+    }
+
+    function renderSparkles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < sparkles.length; i++) {
+        sparkles[i].update();
+        sparkles[i].draw();
+      }
+      requestAnimationFrame(renderSparkles);
+    }
+
+    function initBackgroundHearts() {
+      const heartSymbols = ['♥', '♡', '💗', '💖', '🌸'];
+      const totalBgHearts = 16;
+
+      for (let i = 0; i < totalBgHearts; i++) {
+        const h = document.createElement('div');
+        h.className = 'bg-floating-heart';
+        h.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+        h.style.left = `${Math.random() * 98}vw`;
+        h.style.animationDuration = `${8 + Math.random() * 12}s`;
+        h.style.animationDelay = `${Math.random() * 9}s`;
+        h.style.fontSize = `${0.9 + Math.random() * 1.2}rem`;
+        bgHeartsContainer.appendChild(h);
+      }
+    }
+
+    /**
+     * คำนวณ Scale ของหัวใจตามขนาดหน้าจอเพื่อความ Responsive
+     */
+    function calculateAdaptiveScale() {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      const minDimension = Math.min(w, h);
+
+      if (minDimension < 380) return 9.5;
+      if (minDimension < 480) return 11.5;
+      if (minDimension < 768) return 14;
+      if (minDimension < 1024) return 17;
+      return 19.5;
+    }
+
+    /**
+     * คำนวณพิกัดหัวใจด้วยสมการ Parametric Heart Math Equation:
+     * x = 16 * sin^3(t)
+     * y = -(13 * cos(t) - 5 * cos(2t) - 2 * cos(3t) - cos(4t))
+     */
+    function computeHeartCoordinates(totalCount, scale) {
+      const points = [];
+      const outerCount = Math.floor(totalCount * 0.65);
+      const innerCount = totalCount - outerCount;
+
+      // 1. เส้นขอบนอกของหัวใจ (Outer Contour)
+      for (let i = 0; i < outerCount; i++) {
+        const t = (Math.PI * 2 * i) / outerCount;
+        const x = 16 * Math.pow(Math.sin(t), 3);
+        const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+        points.push({
+          x: x * scale,
+          y: y * scale,
+          layer: 'outer'
+        });
+      }
+
+      // 2. ชั้นกลางและเนื้อในหัวใจ (Inner Depth Layers)
+      for (let i = 0; i < innerCount; i++) {
+        const t = (Math.PI * 2 * i) / innerCount;
+        const subScale = scale * (0.42 + 0.38 * Math.sin(i * 1.5));
+        const x = 16 * Math.pow(Math.sin(t), 3);
+        const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+        points.push({
+          x: x * subScale,
+          y: y * subScale,
+          layer: 'inner'
+        });
+      }
+
+      return points;
+    }
+
+    /**
+     * เริ่มสร้างข้อความรูปหัวใจแบบ Staggered Transition
+     */
+    function createHeartFormation() {
+      cleanupHeartWords();
+      heartCluster.classList.remove('heart-beat-active');
+      centerBanner.classList.remove('show');
+      centerBanner.classList.remove('hide');
+
+      const scale = calculateAdaptiveScale();
+      const points = computeHeartCoordinates(CONFIG.heartTotalPoints, scale);
+
+      // สร้าง Word Nodes
+      for (let i = 0; i < points.length; i++) {
+        const span = document.createElement('span');
+        span.className = 'heart-word';
+        
+        const phrase = CONFIG.sweetPhrases[i % CONFIG.sweetPhrases.length];
+        const color = CONFIG.textColors[i % CONFIG.textColors.length];
+        
+        span.textContent = phrase;
+        span.style.color = color;
+        span.style.left = `${points[i].x}px`;
+        span.style.top = `${points[i].y}px`;
+
+        // สุ่มขนาดฟอนต์ให้มีมิติ (ขอบนอกชัด เนื้อในละมุน)
+        if (points[i].layer === 'outer') {
+          span.style.fontSize = `${0.82 + (i % 3) * 0.12}rem`;
+          span.style.fontWeight = '600';
+        } else {
+          span.style.fontSize = `${0.75 + (i % 2) * 0.1}rem`;
+          span.style.opacity = '0.9';
+        }
+
+        heartCluster.appendChild(span);
+        wordElements.push(span);
+      }
+
+      // ทยอยให้ข้อความปรากฏทีละคำแบบ Staggered
+      wordElements.forEach((el, index) => {
+        setTimeout(() => {
+          if (!isLoopRunning) return;
+          el.classList.add('visible');
+
+          // เมื่อข้อความคำสุดท้ายปรากฏครบแล้ว
+          if (index === wordElements.length - 1) {
+            onHeartFormationComplete();
+          }
+        }, index * CONFIG.staggerDelay);
+      });
+    }
+
+    /**
+     * เมื่อหัวใจสร้างเสร็จสมบูรณ์: เต้น Heartbeat + แสดงปุ่มกลางใจ + รอค้าง 5 วินาที
+     */
+    function onHeartFormationComplete() {
+      setTimeout(() => {
+        if (!isLoopRunning) return;
+        heartCluster.classList.add('heart-beat-active');
+        centerBanner.classList.add('show');
+
+        // ค้างไว้ตาม holdDuration (5 วินาที) แล้วเริ่มทยอยสลายตัว (ถ้าไม่ได้เปิด modal อยู่)
+        clearTimeout(animationLoopTimer);
+        animationLoopTimer = setTimeout(() => {
+          if (!isModalOpen) {
+            startDissolveTransition();
+          }
+        }, CONFIG.holdDuration);
+      }, 350);
+    }
+
+    /**
+     * ค่อย ๆ สลายตัวแบบละอองดาว แล้วเริ่มรอบใหม่แบบ Infinite Loop
+     */
+    function startDissolveTransition() {
+      centerBanner.classList.add('hide');
+      heartCluster.classList.remove('heart-beat-active');
+
+      const shuffledElements = [...wordElements].sort(() => Math.random() - 0.5);
+
+      shuffledElements.forEach((el, index) => {
+        setTimeout(() => {
+          if (!isLoopRunning) return;
+          el.classList.add('dissolving');
+
+          // เมื่อคำสุดท้ายสลายตัวเสร็จ ให้รีเซ็ตและเริ่มรอบใหม่
+          if (index === shuffledElements.length - 1) {
+            setTimeout(() => {
+              if (isLoopRunning) {
+                createHeartFormation();
+              }
+            }, 1200);
+          }
+        }, index * CONFIG.dissolveInterval);
+      });
+    }
+
+    // ปรับสเกลเมื่อพลิกหน้าจอหรือเปลี่ยนขนาด Browser
+    let resizeDebounce = null;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeDebounce);
+      resizeDebounce = setTimeout(() => {
+        if (!isLoopRunning) return;
+        const scale = calculateAdaptiveScale();
+        const points = computeHeartCoordinates(wordElements.length, scale);
+        wordElements.forEach((word, idx) => {
+          if (points[idx]) {
+            word.style.left = `${points[idx].x}px`;
+            word.style.top = `${points[idx].y}px`;
+          }
+        });
+      }, 150);
+    });
+
+    // เริ่มต้นระบบเมื่อหน้าเว็บโหลดเสร็จสมบูรณ์
+    window.addEventListener('DOMContentLoaded', () => {
+      isLoopRunning = true;
+      initBackgroundHearts();
+      renderSparkles();
+      createHeartFormation();
+    });
+  </script>
+</body>
+</html>
