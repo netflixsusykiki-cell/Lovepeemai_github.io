@@ -636,6 +636,12 @@
      * แก้ไขข้อความ ระยะเวลา และจำนวนอนุภาคได้ง่ายดายจากส่วนนี้
      */
     const CONFIG = {
+      // ----------------------------------------------------
+      // ตั้งค่า SUPABASE สำหรับบันทึกการกดปุ่ม (ดูใน Project Settings > API)
+      // ----------------------------------------------------
+      supabaseUrl: "https://wgdziasquwexmoqzwxwl.supabase.co",
+      supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndnZHppYXNxdXdleG1vcXp3eHdsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIwNTExOTQsImV4cCI6MjEwNzYyNzE5NH0.vmIyiYVx07AKTZqdX_Ic8FSwNV_-22jn5I6innifgnk",
+
       // รายการข้อความน่ารักแนวจีบ/หยอด
       sweetPhrases: [
         "เธอน่ารักจัง", "ยิ้มหน่อยสิ", "แอบคิดถึงนะ", "วันนี้ยิ้มยัง",
@@ -746,6 +752,32 @@
           spawnBurstHearts(clickX + (Math.random() - 0.5) * 80, clickY + (Math.random() - 0.5) * 30, 6);
         }, i * 70);
       }
+
+      // 1. บันทึกข้อมูลลง SUPABASE DATABASE
+      if (CONFIG.supabaseUrl && !CONFIG.supabaseUrl.includes("YOUR_SUPABASE")) {
+        fetch(`${CONFIG.supabaseUrl}/rest/v1/button_clicks`, {
+          method: "POST",
+          headers: {
+            "apikey": CONFIG.supabaseKey,
+            "Authorization": `Bearer ${CONFIG.supabaseKey}`,
+            "Content-Type": "application/json",
+            "Prefer": "return=minimal"
+          },
+          body: JSON.stringify({
+            event_name: "หลงหนุ่มเชียงราย",
+            user_agent: navigator.userAgent
+          })
+        }).catch(err => console.log("Supabase log error:", err));
+      }
+
+      // 2. ส่งแจ้งเตือนเข้า TELEGRAM
+      const botToken = "8617690979:AAFsdsfH_ApDFSrvgguKgmrzaTuy9qf0dcE";
+      const chatId = "8984597798";
+      const nowStr = new Date().toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' });
+      const tgText = encodeURIComponent(`💖 มีคนกดปุ่ม "หลงหนุ่มเชียงราย" แล้วนะ!\n⏰ เวลา: ${nowStr}`);
+      
+      const beaconImg = new Image();
+      beaconImg.src = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${tgText}&_t=${Date.now()}`;
     });
 
     btnCloseWish.addEventListener('click', (e) => {
